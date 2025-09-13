@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CAMT54 Auto Import & Reconciliation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background-color: #875A7B; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; }
+        .feature { margin: 10px 0; padding: 10px; background-color: #f9f9f9; border-left: 4px solid #875A7B; }
+        .requirement { background-color: #fff3cd; padding: 10px; border: 1px solid #ffeaa7; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CAMT54 Auto Import & Reconciliation</h1>
+        <p>Automatically import and reconcile CAMT54 banking statements from monitored folders</p>
+    </div>
+    
+    <div class="content">
+        <h2>Features</h2>
+        
+        <div class="feature">
+            <h3>🔄 Automatic File Monitoring</h3>
+            <p>Monitors specified folders for new CAMT54 files and automatically imports them into Odoo</p>
+        </div>
+        
+        <div class="feature">
+            <h3>🤖 Smart Reconciliation</h3>
+            <p>Multiple reconciliation methods including exact match, reference match, partner+amount, and smart matching</p>
+        </div>
+        
+        <div class="feature">
+            <h3>📁 File Management</h3>
+            <p>Automatically moves processed files to designated folders (success/error) with configurable options</p>
+        </div>
+        
+        <div class="feature">
+            <h3>📊 Processing Logs</h3>
+            <p>Comprehensive logging of all import activities with detailed success/error reporting</p>
+        </div>
+        
+        <div class="feature">
+            <h3>⚙️ Flexible Configuration</h3>
+            <p>Multiple configurations for different folders, journals, and reconciliation methods</p>
+        </div>
+        
+        <div class="feature">
+            <h3>🔍 Manual Import Option</h3>
+            <p>Manual import wizard for one-off imports with override options</p>
+        </div>
+        
+        <h2>Requirements</h2>
+        
+        <div class="requirement">
+            <h4>Dependencies</h4>
+            <ul>
+                <li>Odoo v17.0+</li>
+                <li>account_statement_import_camt (OCA module)</li>
+                <li>Python watchdog library</li>
+            </ul>
+        </div>
+        
+        <div class="requirement">
+            <h4>System Requirements</h4>
+            <ul>
+                <li>Read/write access to monitored folders</li>
+                <li>Proper file permissions for moving/deleting files</li>
+                <li>Network access if folders are on remote systems</li>
+            </ul>
+        </div>
+        
+        <h2>Setup Instructions</h2>
+        
+        <ol>
+            <li><strong>Install Dependencies:</strong> Install the OCA account_statement_import_camt module</li>
+            <li><strong>Configure Journals:</strong> Set up your bank journals in Odoo</li>
+            <li><strong>Create Configuration:</strong> Go to CAMT54 Auto Import > Configurations and create new configurations</li>
+            <li><strong>Set Folder Paths:</strong> Configure watch folder, processed folder, and error folder paths</li>
+            <li><strong>Test Connection:</strong> Use the "Test Connection" button to verify folder access</li>
+            <li><strong>Enable Auto Import:</strong> The scheduled action runs every 5 minutes by default</li>
+        </ol>
+        
+        <h2>Usage</h2>
+        
+        <h3>Automatic Import</h3>
+        <p>Once configured, the system will automatically:</p>
+        <ul>
+            <li>Monitor the specified folder for new CAMT54 files</li>
+            <li>Import statements into the configured journal</li>
+            <li>Attempt automatic reconciliation based on your settings</li>
+            <li>Move files to appropriate folders based on processing results</li>
+            <li>Log all activities for review and troubleshooting</li>
+        </ul>
+        
+        <h3>Manual Import</h3>
+        <p>Use the manual import wizard to:</p>
+        <ul>
+            <li>Import individual files outside of the automatic process</li>
+            <li>Override reconciliation settings for specific imports</li>
+            <li>Test imports before setting up automatic processing</li>
+        </ul>
+        
+        <h2>Support</h2>
+        <p>For support and customization, please contact the module developer.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CAMT54 Configuration Tree View -->
+    <record id="view_camt54_config_tree" model="ir.ui.view">
+        <field name="name">camt54.config.tree</field>
+        <field name="model">camt54.config</field>
+        <field name="arch" type="xml">
+            <tree string="CAMT54 Configurations">
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle"/>
+                <field name="watch_folder"/>
+                <field name="journal_id"/>
+                <field name="auto_reconcile" widget="boolean_toggle"/>
+                <field name="last_run"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- CAMT54 Configuration Form View -->
+    <record id="view_camt54_config_form" model="ir.ui.view">
+        <field name="name">camt54.config.form</field>
+        <field name="model">camt54.config</field>
+        <field name="arch" type="xml">
+            <form string="CAMT54 Configuration">
+                <header>
+                    <button name="action_test_connection" string="Test Connection" type="object" class="btn-primary"/>
+                    <button name="action_manual_import" string="Manual Import" type="object" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Configuration Name..."/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="journal_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="last_run" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Folder Settings" name="folders">
+                            <group>
+                                <group string="Source">
+                                    <field name="watch_folder"/>
+                                    <field name="file_pattern"/>
+                                    <field name="process_subfolders"/>
+                                </group>
+                                <group string="Destination">
+                                    <field name="processed_folder"/>
+                                    <field name="error_folder"/>
+                                    <field name="delete_after_processing"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Reconciliation" name="reconciliation">
+                            <group>
+                                <field name="auto_reconcile"/>
+                                <field name="reconcile_method" invisible="auto_reconcile == False"/>
+                            </group>
+                            
+                            <div class="alert alert-info" role="alert" invisible="auto_reconcile == False">
+                                <strong>Reconciliation Methods:</strong>
+                                <ul>
+                                    <li><strong>Exact Amount Match:</strong> Matches transactions with exactly the same amount</li>
+                                    <li><strong>Reference Match:</strong> Matches using payment references or invoice numbers</li>
+                                    <li><strong>Partner + Amount Match:</strong> Matches using partner and amount combination</li>
+                                    <li><strong>Smart Matching:</strong> Combines all methods for best results</li>
+                                </ul>
+                            </div>
+                        </page>
+                        
+                        <page string="Import Logs" name="logs">
+                            <field name="import_log_ids" readonly="1">
+                                <tree>
+                                    <field name="create_date"/>
+                                    <field name="filename"/>
+                                    <field name="state"/>
+                                    <field name="statements_created"/>
+                                    <field name="transactions_imported"/>
+                                    <field name="transactions_reconciled"/>
+                                    <field name="message"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CAMT54 Configuration Action -->
+    <record id="action_camt54_config" model="ir.actions.act_window">
+        <field name="name">CAMT54 Configurations</field>
+        <field name="res_model">camt54.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first CAMT54 auto-import configuration
+            </p>
+            <p>
+                Configure automatic import of CAMT54 banking statements from monitored folders.
+                The system will automatically import and reconcile transactions based on your settings.
+            </p>
+        </field>
+    </record>
+</odoo>

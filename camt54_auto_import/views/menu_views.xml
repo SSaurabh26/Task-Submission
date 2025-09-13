@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_camt54_auto_import_root"
+              name="CAMT54 Auto Import"
+              sequence="50"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_camt54_config"
+              name="Configurations"
+              parent="menu_camt54_auto_import_root"
+              action="action_camt54_config"
+              sequence="10"/>
+
+    <!-- Manual Import Menu -->
+    <menuitem id="menu_camt54_manual_import"
+              name="Manual Import"
+              parent="menu_camt54_auto_import_root"
+              action="action_camt54_manual_import"
+              sequence="15"/>
+
+    <!-- Import Logs Menu -->
+    <menuitem id="menu_camt54_import_log"
+              name="Import Logs"
+              parent="menu_camt54_auto_import_root"
+              action="action_camt54_import_log"
+              sequence="20"/>
+
+    <!-- Add to Accounting Menu as well -->
+    <menuitem id="menu_camt54_accounting_root"
+              name="CAMT54 Auto Import"
+              parent="account.menu_finance"
+              sequence="99"/>
+
+    <menuitem id="menu_camt54_accounting_config"
+              name="CAMT54 Configurations"
+              parent="menu_camt54_accounting_root"
+              action="action_camt54_config"
+              sequence="10"/>
+
+    <menuitem id="menu_camt54_accounting_logs"
+              name="Import Logs"
+              parent="menu_camt54_accounting_root"
+              action="action_camt54_import_log"
+              sequence="20"/>
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_camt54_config_user,camt54.config.user,model_camt54_config,account.group_account_user,1,1,1,1
+access_camt54_config_manager,camt54.config.manager,model_camt54_config,account.group_account_manager,1,1,1,1
+access_camt54_import_log_user,camt54.import.log.user,model_camt54_import_log,account.group_account_user,1,0,0,0
+access_camt54_import_log_manager,camt54.import.log.manager,model_camt54_import_log,account.group_account_manager,1,1,1,1
+access_camt54_auto_importer_user,camt54.auto.importer.user,model_camt54_auto_importer,account.group_account_user,1,0,0,0
+access_camt54_auto_importer_manager,camt54.auto.importer.manager,model_camt54_auto_importer,account.group_account_manager,1,1,1,1
+access_camt54_manual_import_user,camt54.manual.import.user,model_camt54_manual_import,account.group_account_user,1,1,1,1
+access_camt54_manual_import_manager,camt54.manual.import.manager,model_camt54_manual_import,account.group_account_manager,1,1,1,1

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CAMT54 Import Log Tree View -->
+    <record id="view_camt54_import_log_tree" model="ir.ui.view">
+        <field name="name">camt54.import.log.tree</field>
+        <field name="model">camt54.import.log</field>
+        <field name="arch" type="xml">
+            <tree string="Import Logs" decoration-success="state=='success'" 
+                  decoration-danger="state=='error'" decoration-warning="state=='warning'">
+                <field name="create_date"/>
+                <field name="filename"/>
+                <field name="config_id"/>
+                <field name="state"/>
+                <field name="file_size" widget="integer"/>
+                <field name="statements_created"/>
+                <field name="transactions_imported"/>
+                <field name="transactions_reconciled"/>
+                <field name="processing_time" widget="float_time"/>
+                <field name="message"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- CAMT54 Import Log Form View -->
+    <record id="view_camt54_import_log_form" model="ir.ui.view">
+        <field name="name">camt54.import.log.form</field>
+        <field name="model">camt54.import.log</field>
+        <field name="arch" type="xml">
+            <form string="Import Log" create="false" edit="false">
+                <header>
+                    <button name="action_view_statements" string="View Statements" type="object" 
+                            class="btn-primary" invisible="statements_created == 0"/>
+                    <button name="action_retry_processing" string="Retry" type="object" 
+                            class="btn-secondary" invisible="state != 'error'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="processing,success,error,warning"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="filename"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <field name="config_id"/>
+                            <field name="file_path"/>
+                            <field name="file_size" widget="integer"/>
+                            <field name="processing_time" widget="float_time"/>
+                        </group>
+                        <group>
+                            <field name="create_date"/>
+                            <field name="statements_created"/>
+                            <field name="transactions_imported"/>
+                            <field name="transactions_reconciled"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Message" name="message">
+                            <field name="message" readonly="1"/>
+                        </page>
+                        
+                        <page string="Error Details" name="error" invisible="not error_details">
+                            <field name="error_details" readonly="1"/>
+                        </page>
+                        
+                        <page string="Created Statements" name="statements" invisible="statements_created == 0">
+                            <field name="statement_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="journal_id"/>
+                                    <field name="date"/>
+                                    <field name="balance_start"/>
+                                    <field name="balance_end_real"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CAMT54 Import Log Action -->
+    <record id="action_camt54_import_log" model="ir.actions.act_window">
+        <field name="name">Import Logs</field>
+        <field name="res_model">camt54.import.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No import logs found
+            </p>
+            <p>
+                Import logs will appear here once you start processing CAMT54 files.
+            </p>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_camt54_import_log_search" model="ir.ui.view">
+        <field name="name">camt54.import.log.search</field>
+        <field name="model">camt54.import.log</field>
+        <field name="arch" type="xml">
+            <search string="Search Import Logs">
+                <field name="filename"/>
+                <field name="config_id"/>
+                <field name="message"/>
+                
+                <filter string="Success" name="success" domain="[('state', '=', 'success')]"/>
+                <filter string="Error" name="error" domain="[('state', '=', 'error')]"/>
+                <filter string="Warning" name="warning" domain="[('state', '=', 'warning')]"/>
+                <filter string="Processing" name="processing" domain="[('state', '=', 'processing')]"/>
+                
+                <separator/>
+                <filter string="Today" name="today" 
+                        domain="[('create_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <filter string="This Week" name="this_week"
+                        domain="[('create_date', '&gt;=', (context_today() - datetime.timedelta(weeks=1)).strftime('%Y-%m-%d'))]"/>
+                
+                <group expand="0" string="Group By">
+                    <filter string="Configuration" name="group_config" context="{'group_by': 'config_id'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

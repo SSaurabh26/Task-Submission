@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Manual Import Wizard Form -->
+    <record id="view_camt54_manual_import_form" model="ir.ui.view">
+        <field name="name">camt54.manual.import.form</field>
+        <field name="model">camt54.manual.import</field>
+        <field name="arch" type="xml">
+            <form string="Manual CAMT54 Import">
+                <group>
+                    <field name="config_id" options="{'no_create': True}"/>
+                    <field name="filename"/>
+                    <field name="file_data" filename="filename"/>
+                    <field name="auto_reconcile"/>
+                </group>
+                <footer>
+                    <button string="Import" name="action_import" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Manual Import Action -->
+    <record id="action_camt54_manual_import" model="ir.actions.act_window">
+        <field name="name">Manual CAMT54 Import</field>
+        <field name="res_model">camt54.manual.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>
